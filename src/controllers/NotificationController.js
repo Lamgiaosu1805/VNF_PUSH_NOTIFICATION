@@ -26,6 +26,22 @@ const NotificationController = {
     
         try {
             const result = await sendMulticastNotification(alias, tokens, title, body, data);
+            console.log({
+                totalTokens: tokens.length,
+                totalBatches: result.totalBatches,
+                totalSuccess: result.totalSuccess,
+                totalFailure: result.totalFailure,
+                results: result.results.map((r, idx) => ({
+                    batch: idx + 1,
+                    success: r.successCount,
+                    failure: r.failureCount,
+                    errors: r.responses
+                    ? r.responses
+                        .filter(r => !r.success)
+                        .map(r => r.error.message)
+                    : r.error ? [r.error] : [],
+                })),
+            })
             res.json({
                 success: true,
                 totalTokens: tokens.length,
