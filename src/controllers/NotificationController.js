@@ -17,7 +17,7 @@ const NotificationController = {
     },
     pushMultiNotification: async (req, res) => {
         const { alias, tokens, title, body, data } = req.body;
-    
+        console.log("BODY_REQUEST: ", req.body)
         // Kiểm tra đầu vào
         if (!alias || !Array.isArray(tokens) || tokens.length === 0 || !title || !body) {
             return res.status(400).json({
