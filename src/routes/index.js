@@ -1,8 +1,7 @@
-const testRouter = require('./test')
+const notificationRouter = require('./pushNotification')
 
-const api_ver = "/api/v1"
 const route = (app) => {
-    app.use(`${api_ver}/test`, testRouter)
+    app.use(`/notification`, notificationRouter)
 }
 
 module.exports = route;
