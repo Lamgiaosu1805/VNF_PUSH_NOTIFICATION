@@ -1,12 +1,11 @@
 const { getMessaging } = require('./firebaseApps');
 const firebaseProjects = require('../../config/firebaseProjects');
 
+const SOUND_NAME = 'default'; // hoặc custom như 'tiengchuong' (Android) / 'custom.caf' (iOS)
+
 const sendNotification = async (alias, fcmToken, title, body, data) => {
   const projectConfig = firebaseProjects[alias];
-
-  if (!projectConfig) {
-    throw new Error(`Alias '${alias}' chưa được cấu hình`);
-  }
+  if (!projectConfig) throw new Error(`Alias '${alias}' chưa được cấu hình`);
 
   const { keyPath } = projectConfig;
   const messaging = getMessaging(alias, keyPath);
@@ -14,12 +13,21 @@ const sendNotification = async (alias, fcmToken, title, body, data) => {
   const message = {
     notification: { title, body },
     token: fcmToken,
+    android: {
+      notification: { sound: SOUND_NAME }
+    },
+    apns: {
+      payload: {
+        aps: {
+          sound: SOUND_NAME
+        }
+      }
+    },
     ...(data && { data }),
   };
 
   return messaging.send(message);
 };
-
 
 const BATCH_SIZE = 500;
 const sendMulticastNotification = async (alias, tokens, title, body, data) => {
@@ -33,12 +41,21 @@ const sendMulticastNotification = async (alias, tokens, title, body, data) => {
   let totalSuccess = 0;
   let totalFailure = 0;
 
-  // Chia tokens thành từng batch 500
   for (let i = 0; i < tokens.length; i += BATCH_SIZE) {
     const tokenBatch = tokens.slice(i, i + BATCH_SIZE);
     const message = {
       notification: { title, body },
       tokens: tokenBatch,
+      android: {
+        notification: { sound: SOUND_NAME }
+      },
+      apns: {
+        payload: {
+          aps: {
+            sound: SOUND_NAME
+          }
+        }
+      },
       ...(data && { data }),
     };
 
@@ -61,4 +78,7 @@ const sendMulticastNotification = async (alias, tokens, title, body, data) => {
   };
 };
 
-module.exports = { sendNotification, sendMulticastNotification };
+module.exports = {
+  sendNotification,
+  sendMulticastNotification
+};
