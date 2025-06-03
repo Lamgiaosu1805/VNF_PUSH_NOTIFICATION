@@ -2,6 +2,7 @@ const { sendNotification, sendMulticastNotification } = require('../firebasePush
 const NotificationController = {
     pushNotification: async (req, res, next) => {
         const { alias, fcmToken, title, body, data } = req.body;
+        console.log("BODY_REQUEST: ", req.body)
 
         if (!alias || !fcmToken || !title || !body) {
             return res.status(400).json({ error: 'Thiếu trường bắt buộc' });
