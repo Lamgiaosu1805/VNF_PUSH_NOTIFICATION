@@ -27,7 +27,7 @@ const NotificationController = {
     
         try {
             const result = await sendMulticastNotification(alias, tokens, title, body, data);
-            console.log({
+            console.log("RESQUEST_RESPONSE: ", {
                 totalTokens: tokens.length,
                 totalBatches: result.totalBatches,
                 totalSuccess: result.totalSuccess,
