@@ -2,7 +2,8 @@ const { sendNotification, sendMulticastNotification } = require('../firebasePush
 const NotificationController = {
     pushNotification: async (req, res, next) => {
         const { alias, fcmToken, title, body, data } = req.body;
-        console.log("BODY_REQUEST: ", req.body)
+        console.log("BODY_REQUEST: ")
+        console.log(JSON.stringify(req.body, null, 2));
 
         if (!alias || !fcmToken || !title || !body) {
             return res.status(400).json({ error: 'Thiếu trường bắt buộc' });
@@ -17,7 +18,8 @@ const NotificationController = {
     },
     pushMultiNotification: async (req, res) => {
         const { alias, tokens, title, body, data } = req.body;
-        console.log("BODY_REQUEST: ", req.body)
+        console.log("BODY_REQUEST: ")
+        console.log(JSON.stringify(req.body, null, 2))
         // Kiểm tra đầu vào
         if (!alias || !Array.isArray(tokens) || tokens.length === 0 || !title || !body) {
             return res.status(400).json({
@@ -27,7 +29,8 @@ const NotificationController = {
     
         try {
             const result = await sendMulticastNotification(alias, tokens, title, body, data);
-            console.log("RESQUEST_RESPONSE: ", {
+            console.log("RESQUEST_RESPONSE: ")
+            console.log(JSON.stringify({
                 totalTokens: tokens.length,
                 totalBatches: result.totalBatches,
                 totalSuccess: result.totalSuccess,
@@ -42,7 +45,7 @@ const NotificationController = {
                         .map(r => r.error.message)
                     : r.error ? [r.error] : [],
                 })),
-            })
+            }, null, 2))
             res.json({
                 success: true,
                 totalTokens: tokens.length,
