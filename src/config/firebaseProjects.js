@@ -6,10 +6,10 @@ const firebaseProjects = {
     projectId: 'tikluy',
     keyPath: path.join(__dirname, '../firebasePushService/keys/google-services.js'),
   },
-//   customerB: {
-//     projectId: 'firebase-project-id-b',
-//     keyPath: path.join(__dirname, '../keys/projectB-key.json'),
-//   },
+  vnfite: {
+    projectId: 'vnfite-firebase',
+    keyPath: path.join(__dirname, '../firebasePushService/keys/vnfite-firebase-firebase.js'),
+  },
 };
 
 module.exports = firebaseProjects;
