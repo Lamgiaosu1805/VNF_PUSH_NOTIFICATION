@@ -41,9 +41,12 @@ const NotificationController = {
                     failure: r.failureCount,
                     errors: r.responses
                     ? r.responses
-                        .filter(r => !r.success)
-                        .map(r => r.error.message)
-                    : r.error ? [r.error] : [],
+                        .map((resp, i) => !resp.success ? {
+                            token: tokens[i],
+                            error: resp.error?.message || 'Unknown error'
+                            } : null)
+                        .filter(Boolean)
+                    : r.error ? [{ token: tokens[0], error: r.error }] : [],
                 })),
             }, null, 2))
             res.json({
@@ -58,9 +61,12 @@ const NotificationController = {
                     failure: r.failureCount,
                     errors: r.responses
                     ? r.responses
-                        .filter(r => !r.success)
-                        .map(r => r.error.message)
-                    : r.error ? [r.error] : [],
+                        .map((resp, i) => !resp.success ? {
+                            token: tokens[i],
+                            error: resp.error?.message || 'Unknown error'
+                          } : null)
+                        .filter(Boolean)
+                    : r.error ? [{ token: tokens[0], error: r.error }] : [],
                 })),
             });
         } catch (err) {
