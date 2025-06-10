@@ -14,6 +14,7 @@ const NotificationController = {
             res.json({ success: true, result });
         } catch (err) {
             res.status(500).json({ error: 'Không gửi được', detail: err.message });
+            console.log(JSON.stringify(err.message, null, 2));
         }
     },
     pushMultiNotification: async (req, res) => {
@@ -23,7 +24,7 @@ const NotificationController = {
         // Kiểm tra đầu vào
         if (!alias || !Array.isArray(tokens) || tokens.length === 0 || !title || !body) {
             return res.status(400).json({
-            error: 'Vui lòng cung cấp alias, title, body và danh sách tokens (mảng)',
+                error: 'Vui lòng cung cấp alias, title, body và danh sách tokens (mảng)',
             });
         }
     
