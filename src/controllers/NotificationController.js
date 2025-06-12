@@ -6,6 +6,13 @@ const NotificationController = {
         console.log(JSON.stringify(req.body, null, 2));
 
         if (!alias || !fcmToken || !title || !body) {
+            console.log(JSON.stringify({
+                error: 'Thiếu trường bắt buộc',
+                alias,
+                fcmToken,
+                title,
+                body
+            }, null, 2));
             return res.status(400).json({ error: 'Thiếu trường bắt buộc' });
         }
 
@@ -14,7 +21,13 @@ const NotificationController = {
             res.json({ success: true, result });
         } catch (err) {
             res.status(500).json({ error: 'Không gửi được', detail: err.message });
-            console.log(JSON.stringify(err.message, null, 2));
+            console.log(JSON.stringify({
+                error: err.message,
+                alias,
+                fcmToken,
+                title,
+                body
+            }, null, 2));
         }
     },
     pushMultiNotification: async (req, res) => {
@@ -23,6 +36,12 @@ const NotificationController = {
         console.log(JSON.stringify(req.body, null, 2))
         // Kiểm tra đầu vào
         if (!alias || !Array.isArray(tokens) || tokens.length === 0 || !title || !body) {
+            console.log(JSON.stringify({
+                error: 'Vui lòng cung cấp alias, title, body và danh sách tokens (mảng)',
+                alias,
+                title,
+                body
+            }, null, 2));
             return res.status(400).json({
                 error: 'Vui lòng cung cấp alias, title, body và danh sách tokens (mảng)',
             });
