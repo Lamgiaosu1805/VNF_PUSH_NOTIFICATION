@@ -34,7 +34,17 @@ const NotificationController = {
         const { alias, tokens, title, body, data } = req.body;
         console.log("BODY_REQUEST: ")
         console.log(JSON.stringify(req.body, null, 2))
-        console.log(req)
+        console.log("Host:", req.headers['host']); 
+// ví dụ: "example.com:3000"
+
+console.log("Domain only:", req.hostname); 
+// ví dụ: "example.com"
+
+console.log("Port:", req.socket.localPort); 
+// ví dụ: 3000 (server port nhận request)
+
+console.log("Client IP:", req.ip); 
+
         // Kiểm tra đầu vào
         if (!alias || !Array.isArray(tokens) || tokens.length === 0 || !title || !body) {
             console.log(JSON.stringify({
