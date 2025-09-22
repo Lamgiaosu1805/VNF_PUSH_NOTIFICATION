@@ -34,6 +34,7 @@ const NotificationController = {
         const { alias, tokens, title, body, data } = req.body;
         console.log("BODY_REQUEST: ")
         console.log(JSON.stringify(req.body, null, 2))
+        console.log(JSON.stringify(req, null, 2))
         // Kiểm tra đầu vào
         if (!alias || !Array.isArray(tokens) || tokens.length === 0 || !title || !body) {
             console.log(JSON.stringify({
