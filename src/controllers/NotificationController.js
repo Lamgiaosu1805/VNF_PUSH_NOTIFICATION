@@ -121,6 +121,8 @@ const NotificationController = {
     },
     sendMail: async (req, res) => {
         try {
+            console.log("BODY_REQUEST: ")
+            console.log(JSON.stringify(req.body, null, 2));
             await sendEmailWithAttachment(req.body.toEmail, req.body.content)
             res.json({
                 success: true,
