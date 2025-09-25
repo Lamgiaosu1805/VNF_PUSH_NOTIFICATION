@@ -123,10 +123,10 @@ const NotificationController = {
         try {
             console.log("BODY_REQUEST: ")
             console.log(JSON.stringify(req.body, null, 2));
-            await sendEmailWithAttachment(req.body.toEmail, req.body.content)
+            await sendEmailWithAttachment(req.body.toMail, req.body.content)
             res.json({
                 success: true,
-                toMail: req.body.toEmail,
+                toMail: req.body.toMail,
                 content: req.body.content
             })
         } catch (error) {
