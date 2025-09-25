@@ -1,4 +1,6 @@
 const { sendNotification, sendMulticastNotification } = require('../firebasePushService/firebase/pushService');
+const nodemailer = require("nodemailer");
+
 
 async function sendEmailWithAttachment(toEmail, content) {
     let transporter = nodemailer.createTransport({
