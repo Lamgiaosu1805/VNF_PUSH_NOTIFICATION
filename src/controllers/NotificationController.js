@@ -122,10 +122,15 @@ const NotificationController = {
     sendMail: async (req, res) => {
         try {
             await sendEmailWithAttachment(req.body.toEmail, req.body.content)
+            res.json({
+                success: true,
+                toMail: req.body.toEmail,
+                content: req.body.content
+            })
         } catch (error) {
             res.status(500).json({
                 error: 'Không gửi được',
-                detail: err.message,
+                detail: error.message,
             });
         }
     }
